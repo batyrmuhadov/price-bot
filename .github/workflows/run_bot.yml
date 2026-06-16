@@ -2,14 +2,16 @@ name: Price Bot Run
 
 on:
   schedule:
-    - cron: '0 */8 * * *'  # Runs every 8 hours
-  workflow_dispatch:      # Allows you to click "Run Now" manually
+    - cron: '0 */8 * * *'
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    # 🔴 IMPORTANT: This gives the bot permission to write to your repo
+
     permissions:
       contents: write
 
@@ -25,8 +27,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install Libraries
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run Price Bot Script
         run: python bot.py
@@ -35,7 +36,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add price_history.csv products.txt PRICES.md
-          git commit -m "📈 Update price history [skip ci]" || exit 0
           git pull --rebase
+          git add price_history.csv products.txt PRICES.md
+          git commit -m "📈 Update price history [skip ci]" || true
           git push
