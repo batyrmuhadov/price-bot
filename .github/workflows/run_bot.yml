@@ -36,7 +36,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add price_history.csv products.toml sources.toml PRICES.md
+          for f in price_history.csv products.toml sources.toml PRICES.md; do git add "$f" 2>/dev/null || true; done
           git commit -m "📈 Update price history [skip ci]" || true
           git pull --rebase
           git push
