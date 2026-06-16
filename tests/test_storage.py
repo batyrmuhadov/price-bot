@@ -4,9 +4,41 @@ import csv
 import pytest
 
 from storage import (
-    load_products, load_history, get_last_price,
+    load_products, load_sources, load_history, get_last_price,
     prices_differ, append_price_history, trim_csv,
 )
+
+
+class TestLoadSources:
+    def test_load_valid_sources(self):
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".toml") as f:
+            f.write('[[sources]]\n')
+            f.write('name = "TestSite"\n')
+            f.write('base_url = "https://example.com/search?q={}"\n')
+            f.write('selectors = [".price", ".cost"]\n')
+            f.flush()
+            path = f.name
+        try:
+            sources = load_sources(path)
+            assert len(sources) == 1
+            assert "TestSite" in sources
+            assert sources["TestSite"]["base_url"] == "https://example.com/search?q={}"
+            assert sources["TestSite"]["selectors"] == [".price", ".cost"]
+        finally:
+            os.unlink(path)
+
+    def test_file_not_found(self):
+        assert load_sources("/nonexistent/sources.toml") == {}
+
+    def test_empty_file(self):
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".toml") as f:
+            f.write('')
+            f.flush()
+            path = f.name
+        try:
+            assert load_sources(path) == {}
+        finally:
+            os.unlink(path)
 
 
 class TestLoadProducts:

@@ -4,13 +4,14 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from config import (
-    SOURCES, parse_args, setup_logging,
+    SOURCES, BUILTIN_SOURCES, parse_args, setup_logging,
+    DEFAULT_SOURCES_FILE,
     DEFAULT_MAX_RETRIES, DEFAULT_RETRY_BACKOFF, DEFAULT_REQUEST_TIMEOUT,
 )
 from fetcher import create_session
 from parser import get_price
 from storage import (
-    load_products, load_history, get_last_price,
+    load_products, load_sources, load_history, get_last_price,
     prices_differ, append_price_history, trim_csv,
 )
 from reporter import generate_readme
@@ -74,6 +75,10 @@ def main():
     args = parse_args()
     setup_logging(args.log_level)
     logger.info("Starting Price Bot")
+    file_sources = load_sources(DEFAULT_SOURCES_FILE)
+    SOURCES.clear()
+    SOURCES.update(file_sources if file_sources else BUILTIN_SOURCES)
+    logger.info("Loaded %d sources", len(SOURCES))
     if args.dry_run:
         logger.info("DRY-RUN mode: no data will be saved")
     products = load_products(args.products)

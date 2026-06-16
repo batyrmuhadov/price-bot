@@ -3,6 +3,7 @@ import argparse
 import logging
 from typing import Dict
 
+DEFAULT_SOURCES_FILE = "sources.toml"
 DEFAULT_PRODUCTS_FILE = "products.toml"
 DEFAULT_PRICE_HISTORY_FILE = "price_history.csv"
 DEFAULT_REPORT_FILE = "PRICES.md"
@@ -27,7 +28,7 @@ HEADERS = {
     "Upgrade-Insecure-Requests": "1",
 }
 
-SOURCES: Dict[str, Dict] = {
+BUILTIN_SOURCES: Dict[str, Dict] = {
     "Idealo": {
         "base_url": "https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q={}",
         "selectors": [
@@ -50,6 +51,8 @@ SOURCES: Dict[str, Dict] = {
         ],
     },
 }
+
+SOURCES: Dict[str, Dict] = {}
 
 
 def parse_args():

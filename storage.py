@@ -13,6 +13,21 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
+def load_sources(filepath: str) -> Dict[str, Dict]:
+    if not os.path.exists(filepath):
+        logger.warning("Sources file '%s' not found.", filepath)
+        return {}
+    with open(filepath, "rb") as f:
+        data = tomllib.load(f)
+    sources = {}
+    for entry in data.get("sources", []):
+        sources[entry["name"]] = {
+            "base_url": entry["base_url"],
+            "selectors": list(entry["selectors"]),
+        }
+    return sources
+
+
 def load_products(filepath: str) -> List[Dict]:
     products = []
     if not os.path.exists(filepath):

@@ -1,0 +1,22 @@
+[[sources]]
+name = "Idealo"
+base_url = "https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q={}"
+selectors = [
+    ".sr-resultItem__price",
+    ".offerList-item-price",
+    "[data-testid=\"product-price\"]",
+    ".price",
+    ".oopStage-price",
+    ".productOffers-list-itemInformerPriceButton",
+]
+
+[[sources]]
+name = "Billiger"
+base_url = "https://www.billiger.de/suche/{}"
+selectors = [
+    ".product-price",
+    ".price",
+    "[data-testid=\"product-price\"]",
+    ".offer-price",
+    ".item-price",
+]
