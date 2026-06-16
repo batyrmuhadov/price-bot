@@ -1,0 +1,5 @@
+# Add one product per line in the format:
+# Product Name|Target Price (in EUR)
+# Lines starting with # are ignored.
+Acer Predator Helios Neo 16|1550
+Lenovo Legion 5|1650
