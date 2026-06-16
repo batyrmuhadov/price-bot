@@ -54,4 +54,4 @@ Automated price tracking for products on idealo.de and billiger.de.
 | 2026-06-12 22:04:11 | 2158.00 | [Amazon](https://www.billiger.de/suche/Lenovo+Legion+5+%28Amazon%29) |
 | 2026-06-12 20:21:22 | 2158.00 | [Amazon](https://www.billiger.de/suche/Lenovo+Legion+5+%28Amazon%29) |
 
-*Last updated: 2026-06-16 22:06:54*
+*Last updated: 2026-06-16 22:33:12*
