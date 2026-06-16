@@ -1,5 +1,6 @@
 requests
 beautifulsoup4
+tomli
 
 # Testing
 pytest ; python_version >= "3.0"

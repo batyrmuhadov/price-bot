@@ -5,6 +5,11 @@ import tempfile
 import shutil
 from typing import List, Optional, Dict
 
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib
+
 logger = logging.getLogger(__name__)
 
 
@@ -13,21 +18,13 @@ def load_products(filepath: str) -> List[Dict]:
     if not os.path.exists(filepath):
         logger.warning("Products file '%s' not found.", filepath)
         return products
-    with open(filepath, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            parts = line.split("|")
-            if len(parts) >= 2:
-                name = parts[0].strip()
-                try:
-                    target = float(parts[1].strip())
-                except ValueError:
-                    continue
-                products.append({"name": name, "target_price": target})
-            else:
-                products.append({"name": line, "target_price": None})
+    with open(filepath, "rb") as f:
+        data = tomllib.load(f)
+    for entry in data.get("products", []):
+        products.append({
+            "name": entry["name"],
+            "target_price": entry.get("target_price"),
+        })
     return products
 
 

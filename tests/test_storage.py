@@ -11,12 +11,17 @@ from storage import (
 
 class TestLoadProducts:
     def test_load_valid_products(self):
-        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as f:
-            f.write("Product A|100\n")
-            f.write("Product B|200.50\n")
-            f.write("# Comment line\n")
-            f.write("Product C|invalid\n")
-            f.write("Product D\n")
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".toml") as f:
+            f.write('[[products]]\n')
+            f.write('name = "Product A"\n')
+            f.write('target_price = 100.0\n')
+            f.write('\n')
+            f.write('[[products]]\n')
+            f.write('name = "Product B"\n')
+            f.write('target_price = 200.50\n')
+            f.write('\n')
+            f.write('[[products]]\n')
+            f.write('name = "Product D"\n')
             f.flush()
             path = f.name
         try:
@@ -29,7 +34,7 @@ class TestLoadProducts:
             os.unlink(path)
 
     def test_file_not_found(self):
-        products = load_products("/nonexistent/path.txt")
+        products = load_products("/nonexistent/path.toml")
         assert products == []
 
 

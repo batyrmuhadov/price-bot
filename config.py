@@ -3,7 +3,7 @@ import argparse
 import logging
 from typing import Dict
 
-DEFAULT_PRODUCTS_FILE = "products.txt"
+DEFAULT_PRODUCTS_FILE = "products.toml"
 DEFAULT_PRICE_HISTORY_FILE = "price_history.csv"
 DEFAULT_REPORT_FILE = "PRICES.md"
 DEFAULT_MAX_HISTORY = 50
