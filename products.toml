@@ -1,6 +1,10 @@
 [[products]]
-name = "Acer Predator Helios Neo 16"
-target_price = 1550
+name = "MacBook Pro 14 M5 24"
+target_price = 2000
+
+[[products]]
+name = "MacBook Pro 14 M5 48 GB RAM"
+target_price = 2500
 
 [[products]]
 name = "Lenovo Legion 5"
